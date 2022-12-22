@@ -1,5 +1,15 @@
 import csv
 import serial
+import sys
+from datetime import datetime
+
+sample_name = ''
+if len(sys.argv) > 1:
+    sample_name = sys.argv[1]
+
+# datetime object containing current date and time
+now = datetime.now()
+dt_string = now.strftime("%d-%m-%Y_%H-%M-%S")
 
 # Set the serial port and baud rate
 SERIAL_PORT = '/dev/ttyUSB0'
@@ -12,9 +22,12 @@ except serial.serialutil.SerialException:
     print('Error: Could not open serial port')
     exit()
 
+csv_file_name = '{}_{}.csv'.format(dt_string, sample_name)
+print(csv_file_name)
+
 # Open the CSV file for writing
 try:
-    with open('data.csv', 'a', newline='') as csvfile:
+    with open(csv_file_name, 'w+', newline='') as csvfile:
         # Create a CSV writer
         writer = csv.writer(csvfile)
 
