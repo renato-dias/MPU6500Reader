@@ -30,11 +30,11 @@ bfs::Mpu6500 imu;
 
 void setup() {
   /* Serial to display data */
-  Serial.begin(115200);
+  Serial.begin(2000000);
   while(!Serial) {}
   /* Start the I2C bus */
-  Wire.begin();
   Wire.setClock(400000);
+  Wire.begin();
   /* I2C bus,  0x68 address */
   imu.Config(&Wire, bfs::Mpu6500::I2C_ADDR_PRIM);
   /* Initialize and configure IMU */
@@ -52,7 +52,7 @@ void setup() {
 void loop() {
   /* Check if data read */
   if (imu.Read()) {
-    Serial.print(micros());
+    Serial.print(millis());
     Serial.print(",");
     Serial.print(imu.accel_x_mps2());
     Serial.print(",");
